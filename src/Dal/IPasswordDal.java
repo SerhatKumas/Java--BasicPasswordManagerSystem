@@ -13,10 +13,10 @@ public interface IPasswordDal {
     String getSocialMediaLinkByRecordId(Statement statement, String recordId);
     String getSocialMediaUsernameByRecordId(Statement statement, String recordId);
     String getSocialMediaPasswordContentByRecordId(Statement statement, String recordId);
-    void updateSocialMediaNameByRecordId(Statement statement, String recordId);
-    void updateSocialMediaLinkByRecordId(Statement statement, String recordId);
-    void updateSocialMediaUsernameByRecordId(Statement statement, String recordId);
-    void updateSocialMediaPasswordContentByRecordId(Statement statement, String recordId);
+    void updateSocialMediaNameByRecordId(Statement statement, String recordId, String SocialMediaSiteName);
+    void updateSocialMediaLinkByRecordId(Statement statement, String recordId, String SocialMediaSiteLink);
+    void updateSocialMediaUsernameByRecordId(Statement statement, String recordId, String SocialMediaUsername);
+    void updateSocialMediaPasswordContentByRecordId(Statement statement, String recordId, String SocialMediaPasswordContent);
     void deleteSocialMediaRecordByRecordId(Statement statement, String recordId);
     void addSocialMediaRecordByRecordId(Statement statement, Long recordId, Long userId, String socialMediaSiteName, String socialMediaSiteLink, String socialMediaUserName, String socialMediaPassword);
 }
