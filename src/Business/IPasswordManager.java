@@ -11,6 +11,7 @@ public interface IPasswordManager {
     List<PasswordRecord> getAllSocialMediaRecords(IPasswordDal passwordDal, Statement statement);
     PasswordRecord getSocialMediaRecordByRecordId(IPasswordDal passwordDal, Statement statement, String recordId);
     List<PasswordRecord> getSocialMediaRecordsByUserId(IPasswordDal passwordDal, Statement statement, String userId) throws Exception;
+    List<PasswordRecord> getSocialMediaRecordsBySocialMediaSiteName(IPasswordDal passwordDal, Statement statement, String socialMediaSiteName, String userId) throws Exception;
     String getSocialMediaNameByRecordId(IPasswordDal passwordDal, Statement statement, String recordId);
     String getSocialMediaLinkByRecordId(IPasswordDal passwordDal, Statement statement, String recordId);
     String getSocialMediaUsernameByRecordId(IPasswordDal passwordDal, Statement statement, String recordId);

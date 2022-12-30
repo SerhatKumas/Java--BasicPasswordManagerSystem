@@ -57,6 +57,21 @@ public class PasswordRecordDal implements IPasswordDal {
     }
 
     @Override
+    public List<PasswordRecord> getSocialMediaRecordsBySocialMediaSiteName(Statement statement, String socialMediaSiteName, String userId) {
+        List<PasswordRecord> passwordRecordList = null;
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM passwordrecordtable WHERE SocialMediaSiteName = '"+socialMediaSiteName+"' AND UserId = '"+userId+"'");
+            passwordRecordList = new LinkedList<PasswordRecord>();
+            while (resultSet.next()) {
+                passwordRecordList.add(new PasswordRecord(resultSet.getLong(1),resultSet.getLong(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6)));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return passwordRecordList;
+    }
+
+    @Override
     public String getSocialMediaNameByRecordId(Statement statement, String recordId) {
         String SocialMediaSiteName = "";
         try {
@@ -165,5 +180,4 @@ public class PasswordRecordDal implements IPasswordDal {
             System.out.println(e);
         }
     }
-    
 }

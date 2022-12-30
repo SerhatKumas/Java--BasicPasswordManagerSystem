@@ -9,6 +9,7 @@ public interface IPasswordDal {
     List<PasswordRecord> getAllSocialMediaRecords(Statement statement);
     PasswordRecord getSocialMediaRecordByRecordId(Statement statement, String recordId);
     List<PasswordRecord> getSocialMediaRecordsByUserId(Statement statement, String userId);
+    List<PasswordRecord> getSocialMediaRecordsBySocialMediaSiteName(Statement statement, String socialMediaSiteName, String userId);
     String getSocialMediaNameByRecordId(Statement statement, String recordId);
     String getSocialMediaLinkByRecordId(Statement statement, String recordId);
     String getSocialMediaUsernameByRecordId(Statement statement, String recordId);

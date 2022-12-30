@@ -33,6 +33,18 @@ public class PasswordManager implements IPasswordManager {
     }
 
     @Override
+    public List<PasswordRecord> getSocialMediaRecordsBySocialMediaSiteName(IPasswordDal passwordDal, Statement statement, String socialMediaSiteName, String userId) throws Exception {
+        List<PasswordRecord> allSocialMediaRecords = null ;
+        if(userId.length() == 11){
+            allSocialMediaRecords = passwordDal.getSocialMediaRecordsBySocialMediaSiteName(statement,socialMediaSiteName, userId);
+            return allSocialMediaRecords;
+        }
+        else {
+            throw new Exception("User Id has to 11 character");
+        }
+    }
+
+    @Override
     public String getSocialMediaNameByRecordId(IPasswordDal passwordDal, Statement statement, String recordId) {
         String socialMediaSiteName = passwordDal.getSocialMediaNameByRecordId(statement, recordId);
         return socialMediaSiteName;
