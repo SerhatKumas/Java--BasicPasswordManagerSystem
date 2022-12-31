@@ -1,9 +1,11 @@
 package LoginController;
 
 import java.sql.Statement;
+import java.util.List;
+import java.util.Scanner;
 
 public interface ILoginController {
-    void getCredentials();
+    List<String> getCredentials(Scanner scanner);
     void createUserInterface();
     Statement createConnection();
 }
