@@ -1,9 +1,11 @@
 package LoginController.Implementation;
 
 import LoginController.ILoginController;
+import UserInterfaceController.IInterfaceController;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +26,18 @@ public class LoginController implements ILoginController {
     }
 
     @Override
-    public void createUserInterface() {
-        
+    public void createUserInterface(IInterfaceController interfaceController) {
+        List<String> credentials = getCredentials(new Scanner(System.in));
+                Statement statement = createConnection();
+        int employeeCount = 0;
+        try {
+            ResultSet rs = statement.executeQuery("select count(*) from users where UserId = '" + credentials.get(0) + "' AND UserPassword = '" + credentials.get(1) + "'");
+            if (rs.next()){
+                interfaceController.createPortal();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -41,7 +53,6 @@ public class LoginController implements ILoginController {
         } catch (Exception e) {
             System.out.println(e);
         }
-
         return statement;
     }
 }
