@@ -1,6 +1,9 @@
 package UserInterfaceController;
 
+import java.util.Scanner;
+
 public interface IInterfaceController {
-    void createPortal();
+    void createPortal(Scanner scanner);
     void printPortalMethods();
+    int getRecordId();
 }

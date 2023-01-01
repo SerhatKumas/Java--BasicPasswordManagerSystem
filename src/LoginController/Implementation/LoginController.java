@@ -33,7 +33,7 @@ public class LoginController implements ILoginController {
         try {
             ResultSet rs = statement.executeQuery("select count(*) from users where UserId = '" + credentials.get(0) + "' AND UserPassword = '" + credentials.get(1) + "'");
             if (rs.next()){
-                interfaceController.createPortal();
+                interfaceController.createPortal(new Scanner(System.in));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
