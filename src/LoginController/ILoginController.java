@@ -8,6 +8,6 @@ import java.util.Scanner;
 
 public interface ILoginController {
     List<String> getCredentials(Scanner scanner);
-    void createUserInterface(IInterfaceController interfaceController);
+    void createUserInterface();
     Statement createConnection();
 }

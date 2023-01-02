@@ -44,6 +44,7 @@ public class UserInterface implements IInterfaceController {
                     String recordId = scanner.next();
                     PasswordRecord passwordRecord = passwordManager.getSocialMediaRecordByRecordId(new PasswordRecordDal(), statement, recordId);
                     System.out.println(passwordRecord.toString());
+                    break;
                 case 3:
                     passwordRecordList = null;
                     try {
@@ -69,16 +70,19 @@ public class UserInterface implements IInterfaceController {
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
+                    break;
                 case 5:
                     System.out.println("Enter record id : ");
                     String recordIdDeleted = scanner.next();
                     passwordManager.deleteSocialMediaRecordByRecordId(new PasswordRecordDal(), statement, recordIdDeleted);
+                    break;
                 case 6:
                     System.out.println("System is closing....");
                     System.exit(0);
                     break;
                 default:
                     System.err.println("Enter valid menu option");
+                    break;
             }
         }
     }

@@ -1,7 +1,9 @@
 package LoginController.Implementation;
 
+import Business.Implementations.PasswordManager;
 import LoginController.ILoginController;
 import UserInterfaceController.IInterfaceController;
+import UserInterfaceController.Implementations.UserInterface;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,14 +28,14 @@ public class LoginController implements ILoginController {
     }
 
     @Override
-    public void createUserInterface(IInterfaceController interfaceController) {
+    public void createUserInterface() {
         List<String> credentials = getCredentials(new Scanner(System.in));
-                Statement statement = createConnection();
-        int employeeCount = 0;
+        Statement statement = createConnection();
         try {
-            ResultSet rs = statement.executeQuery("select count(*) from users where UserId = '" + credentials.get(0) + "' AND UserPassword = '" + credentials.get(1) + "'");
+            ResultSet rs = statement.executeQuery("select count(*) from usertable where UserId = '" + credentials.get(0) + "' AND UserPassword = '" + credentials.get(1) + "'");
             if (rs.next()){
-                interfaceController.createPortal(new Scanner(System.in));
+                UserInterface userInterface = new UserInterface(credentials.get(0),statement,new PasswordManager());
+                userInterface.createPortal(new Scanner(System.in));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -42,7 +44,7 @@ public class LoginController implements ILoginController {
 
     @Override
     public Statement createConnection() {
-        String url = "jdbc:mysql://localhost:8111/passwordmanagement";
+        String url = "jdbc:mysql://localhost:8111/passwordmanagersystem";
         String username = "root";
         String password = "";
         Statement statement = null;
