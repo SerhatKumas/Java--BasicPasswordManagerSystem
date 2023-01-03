@@ -17,45 +17,51 @@ public class UserInterface implements IInterfaceController {
     private Statement statement;
     private IPasswordManager passwordManager;
 
+    //Full-arg constructor
     public UserInterface(String userId, Statement statement, IPasswordManager passwordManager) {
         this.userId = userId;
         this.statement = statement;
         this.passwordManager = passwordManager;
     }
 
+    //Portal runner method
     @Override
     public void createPortal(Scanner scanner) {
         List<PasswordRecord> passwordRecordList = null;
-        while(true){
+        while (true) {
             printPortalMethods();
             int menuChoice = scanner.nextInt();
-            switch (menuChoice){
+            switch (menuChoice) {
+                //Display My All Passwords
                 case 1:
                     passwordRecordList = null;
                     try {
-                        passwordRecordList = passwordManager.getSocialMediaRecordsByUserId(new PasswordRecordDal(),statement,userId);
+                        passwordRecordList = passwordManager.getSocialMediaRecordsByUserId(new PasswordRecordDal(), statement, userId);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                     System.out.println(passwordRecordList.toString());
                     break;
+                //Display My Password By Id
                 case 2:
                     System.out.println("Enter record id : ");
                     String recordId = scanner.next();
                     PasswordRecord passwordRecord = passwordManager.getSocialMediaRecordByRecordId(new PasswordRecordDal(), statement, recordId);
                     System.out.println(passwordRecord.toString());
                     break;
+                //Display My Passwords By Social Media Site Name
                 case 3:
                     passwordRecordList = null;
                     try {
                         System.out.println("Enter social media name : ");
                         String socialMediaNameSearch = scanner.next();
-                        passwordRecordList = passwordManager.getSocialMediaRecordsBySocialMediaSiteName(new PasswordRecordDal(),statement,socialMediaNameSearch,userId);
+                        passwordRecordList = passwordManager.getSocialMediaRecordsBySocialMediaSiteName(new PasswordRecordDal(), statement, socialMediaNameSearch, userId);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                     System.out.println(passwordRecordList.toString());
                     break;
+                //Create New Password
                 case 4:
                     System.out.println("Enter social media name : ");
                     String socialMediaName = scanner.next();
@@ -66,16 +72,18 @@ public class UserInterface implements IInterfaceController {
                     System.out.println("Enter social media password : ");
                     String socialMediaPassword = scanner.next();
                     try {
-                        passwordManager.addSocialMediaRecordByRecordId(new PasswordRecordDal(), statement, (long) getRecordId(), Long.valueOf(userId),socialMediaName,socialMediaLink,socialMediaUsername,socialMediaPassword);
+                        passwordManager.addSocialMediaRecordByRecordId(new PasswordRecordDal(), statement, (long) getRecordId(), Long.valueOf(userId), socialMediaName, socialMediaLink, socialMediaUsername, socialMediaPassword);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                     break;
+                //Delete My Password By Id
                 case 5:
                     System.out.println("Enter record id : ");
                     String recordIdDeleted = scanner.next();
                     passwordManager.deleteSocialMediaRecordByRecordId(new PasswordRecordDal(), statement, recordIdDeleted);
                     break;
+                //Close the System
                 case 6:
                     System.out.println("System is closing....");
                     System.exit(0);
@@ -87,11 +95,14 @@ public class UserInterface implements IInterfaceController {
         }
     }
 
+    //Method that prints all portal methods in String format
     @Override
     public void printPortalMethods() {
         String portalMethods = "1)Display My All Passwords\n2)Display My Password By Id\n3)Display My Passwords By Social Media Site Name\n4)Create New Password\n5)Delete My Password By Id\n6)Close the System";
         System.out.println(portalMethods);
     }
+
+    //Methods that gets number of record from database
     @Override
     public int getRecordId() {
         ResultSet rs;
@@ -103,6 +114,6 @@ public class UserInterface implements IInterfaceController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return recordId+1;
+        return recordId + 1;
     }
 }

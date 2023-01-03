@@ -16,12 +16,14 @@ public class AdminInterface implements IInterfaceController {
     private IPasswordManager passwordManager;
     private IUserManager userManager;
 
+    //Full-arg Constructor
     public AdminInterface(Statement statement, IPasswordManager passwordManager, IUserManager userManager) {
         this.statement = statement;
         this.passwordManager = passwordManager;
         this.userManager = userManager;
     }
 
+    //Portal runner method
     @Override
     public void createPortal(Scanner scanner) {
         List<PasswordRecord> passwordRecordList = null;
@@ -29,41 +31,47 @@ public class AdminInterface implements IInterfaceController {
         String userId = "";
         String recordId = "";
         User user = null;
-        while(true){
+        while (true) {
             printPortalMethods();
             int menuChoice = scanner.nextInt();
-            switch (menuChoice){
+            switch (menuChoice) {
+                //Display All Passwords In The System
                 case 1:
-                    passwordRecordList = passwordManager.getAllSocialMediaRecords(new PasswordRecordDal(),statement);
+                    passwordRecordList = passwordManager.getAllSocialMediaRecords(new PasswordRecordDal(), statement);
                     System.out.println(passwordRecordList.toString());
+                    break;
+                //Display User's All Passwords By User Id
                 case 2:
                     System.out.println("Enter user id : ");
                     userId = scanner.next();
                     try {
-                        passwordRecordList = passwordManager.getSocialMediaRecordsByUserId(new PasswordRecordDal(),statement,userId);
+                        passwordRecordList = passwordManager.getSocialMediaRecordsByUserId(new PasswordRecordDal(), statement, userId);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                     System.out.println(passwordRecordList.toString());
                     break;
+                //Display User's Password By Password Id
                 case 3:
                     System.out.println("Enter record id : ");
                     recordId = scanner.next();
                     PasswordRecord passwordRecord = passwordManager.getSocialMediaRecordByRecordId(new PasswordRecordDal(), statement, recordId);
                     System.out.println(passwordRecord.toString());
                     break;
+                //Display Specific User's Passwords By User Id and Social Media Site Name
                 case 4:
                     try {
                         System.out.println("Enter social media name : ");
                         String socialMediaNameSearch = scanner.next();
                         System.out.println("Enter social media name : ");
                         String socialMediaName = scanner.next();
-                        passwordRecordList = passwordManager.getSocialMediaRecordsBySocialMediaSiteName(new PasswordRecordDal(),statement,socialMediaNameSearch,socialMediaName);
+                        passwordRecordList = passwordManager.getSocialMediaRecordsBySocialMediaSiteName(new PasswordRecordDal(), statement, socialMediaNameSearch, socialMediaName);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                     System.out.println(passwordRecordList.toString());
                     break;
+                //Create New Password
                 case 5:
                     System.out.println("Enter user id : ");
                     userId = scanner.next();
@@ -76,30 +84,34 @@ public class AdminInterface implements IInterfaceController {
                     System.out.println("Enter social media password : ");
                     String socialMediaPassword = scanner.next();
                     try {
-                        passwordManager.addSocialMediaRecordByRecordId(new PasswordRecordDal(), statement, (long) getRecordId(), Long.valueOf(userId),socialMediaName,socialMediaLink,socialMediaUsername,socialMediaPassword);
+                        passwordManager.addSocialMediaRecordByRecordId(new PasswordRecordDal(), statement, (long) getRecordId(), Long.valueOf(userId), socialMediaName, socialMediaLink, socialMediaUsername, socialMediaPassword);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                     break;
+                //Delete Password By Id
                 case 6:
                     System.out.println("Enter record id : ");
                     recordId = scanner.next();
                     passwordManager.deleteSocialMediaRecordByRecordId(new PasswordRecordDal(), statement, recordId);
                     break;
+                //Display All User In The System
                 case 7:
                     userList = userManager.getAllUsers(new UserDal(), statement);
                     System.out.println(userList.toString());
                     break;
+                //Display User By Id
                 case 8:
                     System.out.println("Enter user id : ");
                     userId = scanner.next();
                     try {
-                        user = userManager.getUserByUserId(new UserDal(), statement,userId);
+                        user = userManager.getUserByUserId(new UserDal(), statement, userId);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                     System.out.println(user.toString());
                     break;
+                //Create New User
                 case 9:
                     System.out.println("Enter user name : ");
                     String userName = scanner.next();
@@ -110,11 +122,12 @@ public class AdminInterface implements IInterfaceController {
                     System.out.println("Enter user password : ");
                     String userPassword = scanner.next();
                     try {
-                        userManager.addUser(new UserDal(), statement, (long )getUserId(),userName,userSurname, userEmail, userPassword);
+                        userManager.addUser(new UserDal(), statement, (long) getUserId(), userName, userSurname, userEmail, userPassword);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                     break;
+                //Delete User By Id
                 case 10:
                     System.out.println("Enter user id : ");
                     userId = scanner.next();
@@ -123,15 +136,20 @@ public class AdminInterface implements IInterfaceController {
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
+                    break;
+                //Exit the System
                 case 11:
                     System.out.println("System is closing...");
                     System.exit(0);
+                    break;
                 default:
                     System.err.println("Enter valid menu option");
+                    break;
             }
         }
     }
 
+    //Method that prints all portal methods in String format
     @Override
     public void printPortalMethods() {
         String portalMethods = """
@@ -149,10 +167,11 @@ public class AdminInterface implements IInterfaceController {
         System.out.println(portalMethods);
     }
 
+    //Methods that gets number of record from database
     @Override
     public int getRecordId() {
-        ResultSet rs ;
-        int recordId ;
+        ResultSet rs;
+        int recordId;
         try {
             rs = statement.executeQuery("select count(*) from passwordrecordtable");
             rs.next();
@@ -160,12 +179,13 @@ public class AdminInterface implements IInterfaceController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return recordId+1;
+        return recordId + 1;
     }
 
+    //Methods that gets number of record from database
     private int getUserId() {
-        ResultSet rs ;
-        int recordId ;
+        ResultSet rs;
+        int recordId;
         try {
             rs = statement.executeQuery("select count(*) from usertable");
             rs.next();
@@ -173,7 +193,7 @@ public class AdminInterface implements IInterfaceController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return recordId+1;
+        return recordId + 1;
     }
 
 }

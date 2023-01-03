@@ -2,7 +2,6 @@ package LoginController.Implementation;
 
 import Business.Implementations.PasswordManager;
 import LoginController.ILoginController;
-import UserInterfaceController.IInterfaceController;
 import UserInterfaceController.Implementations.UserInterface;
 
 import java.sql.Connection;
@@ -15,6 +14,7 @@ import java.util.Scanner;
 
 public class LoginController implements ILoginController {
 
+    //Method that gets user information from console
     @Override
     public List<String> getCredentials(Scanner scanner) {
         List<String> credentials = new ArrayList<>();
@@ -27,14 +27,15 @@ public class LoginController implements ILoginController {
         return credentials;
     }
 
+    //Method that creates user interface according to user information
     @Override
     public void createUserInterface() {
         List<String> credentials = getCredentials(new Scanner(System.in));
         Statement statement = createConnection();
         try {
             ResultSet rs = statement.executeQuery("select count(*) from usertable where UserId = '" + credentials.get(0) + "' AND UserPassword = '" + credentials.get(1) + "'");
-            if (rs.next()){
-                UserInterface userInterface = new UserInterface(credentials.get(0),statement,new PasswordManager());
+            if (rs.next()) {
+                UserInterface userInterface = new UserInterface(credentials.get(0), statement, new PasswordManager());
                 userInterface.createPortal(new Scanner(System.in));
             }
         } catch (Exception e) {
@@ -42,6 +43,7 @@ public class LoginController implements ILoginController {
         }
     }
 
+    //Method that creates statement objects to use in transactions
     @Override
     public Statement createConnection() {
         String url = "jdbc:mysql://localhost:8111/passwordmanagersystem";

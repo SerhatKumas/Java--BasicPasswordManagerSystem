@@ -2,6 +2,7 @@ package Model;
 
 public class PasswordRecord {
 
+    //Password Record Properties
     private final Long recordId;
     private final Long userId;
     private String socialMediaSiteName;
@@ -9,6 +10,7 @@ public class PasswordRecord {
     private String socialMediaUsername;
     private String socialMediaPassword;
 
+    //Full-arg constructor
     public PasswordRecord(Long recordId, Long userId, String socialMediaSiteName, String socialMediaSiteLink, String socialMediaUsername, String socialMediaPassword) {
         this.recordId = recordId;
         this.userId = userId;

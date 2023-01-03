@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+//Database, user objects access layer implementation with jConnector and Mysql
 public class UserDal implements IUserDal {
     @Override
     public List<User> getAllUsers(Statement statement) {
@@ -16,7 +17,7 @@ public class UserDal implements IUserDal {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM usertable");
             userList = new LinkedList<User>();
             while (resultSet.next()) {
-                userList.add(new User(resultSet.getLong(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5)));
+                userList.add(new User(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5)));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -28,9 +29,9 @@ public class UserDal implements IUserDal {
     public User getUserByUserId(Statement statement, String userId) {
         User user = null;
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM usertable WHERE UserId = '"+userId+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM usertable WHERE UserId = '" + userId + "'");
             while (resultSet.next()) {
-                user = new User(resultSet.getLong(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5));
+                user = new User(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -42,9 +43,9 @@ public class UserDal implements IUserDal {
     public User getUserByUserEmail(Statement statement, String userEmail) {
         User user = null;
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM usertable WHERE UserEmail = '"+userEmail+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM usertable WHERE UserEmail = '" + userEmail + "'");
             while (resultSet.next()) {
-                user = new User(resultSet.getLong(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5));
+                user = new User(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -56,7 +57,7 @@ public class UserDal implements IUserDal {
     public String getUserNameByUserId(Statement statement, String userId) {
         String userName = "";
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT UserName FROM usertable WHERE UserId = '"+userId+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT UserName FROM usertable WHERE UserId = '" + userId + "'");
             while (resultSet.next()) {
                 userName = resultSet.getString(1);
             }
@@ -70,7 +71,7 @@ public class UserDal implements IUserDal {
     public String getUserSurnameByUserId(Statement statement, String userId) {
         String userSurname = "";
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT UserSurname FROM usertable WHERE UserId = '"+userId+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT UserSurname FROM usertable WHERE UserId = '" + userId + "'");
             while (resultSet.next()) {
                 userSurname = resultSet.getString(1);
             }
@@ -84,7 +85,7 @@ public class UserDal implements IUserDal {
     public String getUserEmailByUserId(Statement statement, String userId) {
         String userEmail = "";
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT UserEmail FROM usertable WHERE UserId = '"+userId+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT UserEmail FROM usertable WHERE UserId = '" + userId + "'");
             while (resultSet.next()) {
                 userEmail = resultSet.getString(1);
             }
@@ -98,7 +99,7 @@ public class UserDal implements IUserDal {
     public String getUserPasswordByUserId(Statement statement, String userId) {
         String userPassword = "";
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT UserPassword FROM usertable WHERE UserId = '"+userId+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT UserPassword FROM usertable WHERE UserId = '" + userId + "'");
             while (resultSet.next()) {
                 userPassword = resultSet.getString(1);
             }
@@ -112,7 +113,7 @@ public class UserDal implements IUserDal {
     public Long getUserIdByUserEmailAndPassword(Statement statement, String userEmail, String userPassword) {
         Long userId = 0L;
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT UserId FROM usertable WHERE UserEmail = '"+userEmail+"' AND UserPassword ='"+userPassword+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT UserId FROM usertable WHERE UserEmail = '" + userEmail + "' AND UserPassword ='" + userPassword + "'");
             while (resultSet.next()) {
                 userId = resultSet.getLong(1);
             }
@@ -125,7 +126,7 @@ public class UserDal implements IUserDal {
     @Override
     public void updateUserNameByUserId(Statement statement, String userId, String userName) {
         try {
-            statement.executeUpdate("UPDATE usertable SET UserName = '"+userName+"' WHERE userId ='"+userId+"'");
+            statement.executeUpdate("UPDATE usertable SET UserName = '" + userName + "' WHERE userId ='" + userId + "'");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -134,7 +135,7 @@ public class UserDal implements IUserDal {
     @Override
     public void updateUserSurnameByUserId(Statement statement, String userId, String userSurname) {
         try {
-            statement.executeUpdate("UPDATE usertable SET UserSurname = '"+userSurname+"' WHERE userId ='"+userId+"'");
+            statement.executeUpdate("UPDATE usertable SET UserSurname = '" + userSurname + "' WHERE userId ='" + userId + "'");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -143,7 +144,7 @@ public class UserDal implements IUserDal {
     @Override
     public void updateUserEmailByUserId(Statement statement, String userId, String userEmail) {
         try {
-            statement.executeUpdate("UPDATE usertable SET UserEmail = '"+userEmail+"' WHERE userId ='"+userId+"'");
+            statement.executeUpdate("UPDATE usertable SET UserEmail = '" + userEmail + "' WHERE userId ='" + userId + "'");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -152,7 +153,7 @@ public class UserDal implements IUserDal {
     @Override
     public void updateUserPasswordByUserId(Statement statement, String userId, String userPassword) {
         try {
-            statement.executeUpdate("UPDATE usertable SET UserPassword = '"+userPassword+"' WHERE userId ='"+userId+"'");
+            statement.executeUpdate("UPDATE usertable SET UserPassword = '" + userPassword + "' WHERE userId ='" + userId + "'");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -161,7 +162,7 @@ public class UserDal implements IUserDal {
     @Override
     public void deleteUserByUserId(Statement statement, String userId) {
         try {
-            statement.execute("DELETE FROM usertable WHERE userId ='"+userId+"'");
+            statement.execute("DELETE FROM usertable WHERE userId ='" + userId + "'");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -170,7 +171,7 @@ public class UserDal implements IUserDal {
     @Override
     public void addUser(Statement statement, Long userId, String nameOfUser, String lastnameOfUser, String emailOfUser, String passwordOfUser) {
         try {
-            statement.execute("INSERT INTO usertable (UserId, UserName, UserSurname, UserEmail, UserPassword) VALUES ('"+userId+"', '"+nameOfUser+"', '"+lastnameOfUser+"', '"+emailOfUser+"','"+passwordOfUser+"')");
+            statement.execute("INSERT INTO usertable (UserId, UserName, UserSurname, UserEmail, UserPassword) VALUES ('" + userId + "', '" + nameOfUser + "', '" + lastnameOfUser + "', '" + emailOfUser + "','" + passwordOfUser + "')");
         } catch (Exception e) {
             System.out.println(e);
         }

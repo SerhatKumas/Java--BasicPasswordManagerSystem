@@ -7,6 +7,7 @@ import Model.PasswordRecord;
 import java.sql.Statement;
 import java.util.List;
 
+//Business Layer for regulations and business rules
 public class PasswordManager implements IPasswordManager {
     @Override
     public List<PasswordRecord> getAllSocialMediaRecords(IPasswordDal passwordDal, Statement statement) {
@@ -22,24 +23,22 @@ public class PasswordManager implements IPasswordManager {
 
     @Override
     public List<PasswordRecord> getSocialMediaRecordsByUserId(IPasswordDal passwordDal, Statement statement, String userId) throws Exception {
-        List<PasswordRecord> allSocialMediaRecords = null ;
-        if(userId.length() == 11){
+        List<PasswordRecord> allSocialMediaRecords = null;
+        if (userId.length() == 11) {
             allSocialMediaRecords = passwordDal.getSocialMediaRecordsByUserId(statement, userId);
             return allSocialMediaRecords;
-        }
-        else {
+        } else {
             throw new Exception("User Id has to 11 character");
         }
     }
 
     @Override
     public List<PasswordRecord> getSocialMediaRecordsBySocialMediaSiteName(IPasswordDal passwordDal, Statement statement, String socialMediaSiteName, String userId) throws Exception {
-        List<PasswordRecord> allSocialMediaRecords = null ;
-        if(userId.length() == 11){
-            allSocialMediaRecords = passwordDal.getSocialMediaRecordsBySocialMediaSiteName(statement,socialMediaSiteName, userId);
+        List<PasswordRecord> allSocialMediaRecords = null;
+        if (userId.length() == 11) {
+            allSocialMediaRecords = passwordDal.getSocialMediaRecordsBySocialMediaSiteName(statement, socialMediaSiteName, userId);
             return allSocialMediaRecords;
-        }
-        else {
+        } else {
             throw new Exception("User Id has to 11 character");
         }
     }
@@ -95,10 +94,9 @@ public class PasswordManager implements IPasswordManager {
 
     @Override
     public void addSocialMediaRecordByRecordId(IPasswordDal passwordDal, Statement statement, Long recordId, Long userId, String socialMediaSiteName, String socialMediaSiteLink, String socialMediaUserName, String socialMediaPassword) throws Exception {
-        if (userId.toString().length() == 11){
+        if (userId.toString().length() == 11) {
             passwordDal.addSocialMediaRecordByRecordId(statement, recordId, userId, socialMediaSiteName, socialMediaSiteLink, socialMediaUserName, socialMediaPassword);
-        }
-        else {
+        } else {
             throw new Exception("User Id has to 11 character");
         }
     }
